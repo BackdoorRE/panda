@@ -44,6 +44,8 @@ if ! pkg-config --exists protobuf; then
     echo "No pkg-config for protobuf. Continuing anyway..."
 elif pkg-config --exists protobuf "protobuf > 1 protobuf < 3"; then
     echo "Using protobuf $(pkg-config --modversion protobuf)."
+elif pkg-config --exists protobuf && pacman -Qqs libprotobuf2 2&> /dev/null; then
+    echo "Using libprotobuf2 $(pacman -Qi libprotobuf2 | grep Version | sed 's/^.*:\s*//g') (Arch Linux)"
 else
     echo "Found incompatible protobuf $(pkg-config --modversion protobuf) -- ABORTING"
     echo "See panda/docs/compile.md for instructions on building protobuf v2."
